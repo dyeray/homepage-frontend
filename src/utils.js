@@ -1,5 +1,7 @@
+import config from 'config.js';
 
-export function cacheStore(key, value) {
+
+function cacheStore(key, value) {
     let entry = {
         timestamp: Date.now(),
         value: value
@@ -7,11 +9,34 @@ export function cacheStore(key, value) {
     window.localStorage.setItem(key, JSON.stringify(entry));
 }
 
-export function cacheRetrieve(key) {
+function cacheRetrieve(key) {
     let cached = window.localStorage.getItem(key);
     if (cached == null) {
         return null;
     }
     let entry = JSON.parse(cached);
     return (Date.now() - entry.timestamp > 86400000)? null : entry.value;
+}
+
+async function getFilmsFromNetwork() {
+    try {
+        const response = await fetch(config.backend_url);
+        var data = response.json();
+    } catch(error) {
+        console.error(error.message);
+        return null;
+    }
+    return data;
+}
+
+export async function getFilms() {
+    const filmsFromCache = cacheRetrieve('FilmList');
+    if (filmsFromCache != null) {
+        return filmsFromCache;
+    }
+    const filmsFromNetwork = await getFilmsFromNetwork();
+    if (filmsFromNetwork != null) {
+        cacheStore('FilmList', filmsFromNetwork);
+    }
+    return filmsFromNetwork;
 }
