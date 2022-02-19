@@ -21,11 +21,17 @@ export default function SearchBox(props) {
     }
 
     return (
-        <mui.Paper sx={{marginTop: '20em'}}>
-            <mui.TextField id="outlined-basic" label="Search the Web" variant="outlined" onKeyDown={keyPress} onChange={handleChange} />
-            <mui.IconButton aria-label="search" onClick={search}>
-                <SearchIcon />
-            </mui.IconButton>
+        <mui.Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+          <mui.InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search the Web"
+            inputProps={{ 'aria-label': 'search' }}
+            onKeyDown={keyPress}
+            onChange={handleChange}
+          />
+          <mui.IconButton sx={{ p: '10px' }} aria-label="search" onClick={search}>
+            <SearchIcon />
+          </mui.IconButton>
         </mui.Paper>
-    );
+      );
 }

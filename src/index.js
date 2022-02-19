@@ -4,7 +4,6 @@ import * as mui from '@mui/material';
 import SearchBox from './components/SearchBox.js';
 import FilmList from './components/FilmList.js';
 
-
 ReactDOM.render(
     <mui.Box>
         <SearchBox/>
