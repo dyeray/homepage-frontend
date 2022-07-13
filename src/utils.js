@@ -35,7 +35,7 @@ export async function getFilms() {
         return filmsFromCache;
     }
     const filmsFromNetwork = await getFilmsFromNetwork();
-    if (filmsFromNetwork != null) {
+    if (filmsFromNetwork != null && filmsFromNetwork.length !== 0) {
         cacheStore('FilmList', filmsFromNetwork);
     }
     return filmsFromNetwork;
